@@ -9,9 +9,17 @@
 
 class ProjPipeline
 {
+    private:
+    std::vector< std::shared_ptr<DataNode> > _dataNodes;
+    std::shared_ptr<IDistanceProcessor> _distanceProcessor;
+    int _maxOrder;
+
     public:
-    void addDataNode(std::shared_ptr<DataNode> dataNodes);
+    ProjPipeline();
+    void update();
+    void addDataNode(std::shared_ptr<DataNode> dataNode);
     void setDistanceProcessor(std::shared_ptr<IDistanceProcessor> distanceProcessor);
+    std::vector< std::shared_ptr<DataNode> > getEigenDecomp(int order);
 };
 
 #endif

@@ -8,7 +8,7 @@
 class IDistanceProcessor
 {
     public:
-    virtual void setDataSet(std::vector< std::shared_ptr<DataNode> > dataSet) = 0;
+    virtual void setDataNodes(std::vector< std::shared_ptr<DataNode> > dataSet) = 0;
     virtual std::shared_ptr<DissimilarityMatrix> getDissimilarityMatrix() = 0;
 };
 

@@ -16,7 +16,7 @@ SRCS = $(shell find . -path ./$(BUILD_DIR) -prune -o -name '*.cpp' -ls | awk '{$
 # Compiler. On non-gnu systems you may want to change this
 CC = g++
 # C++ version
-EXTRAFLAGS = -std=gnu++14 -I src
+EXTRAFLAGS = -g -std=gnu++14 -I src
 
 SHELL = /bin/bash
 DEPENDENCY_LIST = $(BUILD_DIR)/depend

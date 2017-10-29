@@ -3,9 +3,16 @@
 
 #include <memory>
 #include <vector>
+#include <tuple>
+#include <map>
+#include "datanode.h"
 
 class DissimilarityMatrix
 {
+    private:
+    std::map< std::tuple<int, int>, float > _diffVals;
+    int _numItems;
+
     public:
     void setNumItems(int count);
     void setDiffVal(int id_0, int id_1, double val);
