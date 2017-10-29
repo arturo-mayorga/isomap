@@ -1,5 +1,6 @@
 #include <iostream>
 #include "greeter.h"
+#include "projpipeline.h"
 using namespace std;
 
 
