@@ -2,6 +2,10 @@
 #include <memory>
 #include "projpipeline.h"
 #include "euclideandistanceprocessor.h"
+
+#include "Eigen/Core"
+#include "Eigen/Cholesky"
+
 using namespace std;
 
 

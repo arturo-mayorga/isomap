@@ -1,6 +1,13 @@
 #include <algorithm>
 #include "dissimilaritymatrix.h"
 
+#include <iostream>
+#include <Eigen/Eigenvalues>
+#include "Eigen/Core"
+
+using namespace Eigen;
+using namespace std;
+
 void DissimilarityMatrix::setNumItems(int count)
 {
     this->_numItems = count;
@@ -26,25 +33,30 @@ std::vector< std::shared_ptr<DataNode> > DissimilarityMatrix::getEigenDecomp(int
 {
     std::vector< std::shared_ptr<DataNode> > ret;
 
-    std::vector<std::vector<double>> matrix;
-    matrix.resize(this->_numItems, std::vector<double>(this->_numItems, 0));
+    MatrixXd A(this->_numItems, this->_numItems);
 
     for (int i = 0; i < this->_numItems; ++i)
     {
         for (int j = 0; j < this->_numItems; ++j)
         {
-            matrix[i][j] = this->getDiffVal(i, j);
+            A(i, j) = this->getDiffVal(i, j);
         }
     }
 
-    // todo: this is not real
+    // cout << "The dissimilarity matrix is:" << endl << A << endl << endl;
+
+    // http://eigen.tuxfamily.org/dox/classEigen_1_1SelfAdjointEigenSolver.html
+    SelfAdjointEigenSolver<MatrixXd> es(A);
+    MatrixXd V = es.eigenvectors();
+    // cout << "The matrix of eigenvectors, V, is:" << endl << V << endl << endl;
+
     for (int i = 0; i < this->_numItems; ++i)
     {
         auto t = std::make_shared<DataNode>();
         t->id = i;
         for (int o = 0; o < order; ++o)
         {
-            double v = (o < this->_numItems) ? matrix[i][o] : 0.0;
+            double v = (o < this->_numItems) ? V(i, o) : 0.0;
             t->dataSet.push_back(v);
         }
         ret.push_back(t);
