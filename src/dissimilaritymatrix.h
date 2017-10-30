@@ -5,7 +5,7 @@
 #include <vector>
 #include <tuple>
 #include <map>
-#include "datanode.h"
+#include <datanode.h>
 
 class DissimilarityMatrix
 {

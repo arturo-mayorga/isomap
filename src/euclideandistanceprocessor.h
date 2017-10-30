@@ -1,16 +1,12 @@
 #ifndef EUCLIDEANDISTANCEPROCESSOR_H
 #define EUCLIDEANDISTANCEPROCESSOR_H
 
-#include "idistanceprocessor.h"
+#include <distanceprocessor.h>
 
-class EuclideanDistanceProcessor: public IDistanceProcessor
+class EuclideanDistanceProcessor: public DistanceProcessor
 {
-    private:
-    std::vector< std::shared_ptr<DataNode> > _dataNodes;
-
-    public:
-    virtual void setDataNodes(std::vector< std::shared_ptr<DataNode> > dataSet);
-    virtual std::shared_ptr<DissimilarityMatrix> getDissimilarityMatrix();
+    protected:
+    virtual double _getDistance(int id0, int id1);
 };
 
 #endif

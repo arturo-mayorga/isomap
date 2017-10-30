@@ -1,13 +1,8 @@
 #include <iostream>
 #include <memory>
-#include "projpipeline.h"
-#include "euclideandistanceprocessor.h"
-
-#include "Eigen/Core"
-#include "Eigen/Cholesky"
-
+#include <projpipeline.h>
+#include <euclideandistanceprocessor.h>
 using namespace std;
-
 
 int main()
 {

@@ -1,9 +1,9 @@
 #include <algorithm>
-#include "dissimilaritymatrix.h"
+#include <dissimilaritymatrix.h>
 
 #include <iostream>
 #include <Eigen/Eigenvalues>
-#include "Eigen/Core"
+#include <Eigen/Core>
 
 using namespace Eigen;
 using namespace std;

@@ -1,5 +1,5 @@
 #include <iostream>
-#include "projpipeline.h"
+#include <projpipeline.h>
 
 ProjPipeline::ProjPipeline()
 {
@@ -16,7 +16,7 @@ void ProjPipeline::addDataNode(std::shared_ptr<DataNode> dataNode)
     this->_dataNodes.push_back(dataNode);
 }
 
-void ProjPipeline::setDistanceProcessor(std::shared_ptr<IDistanceProcessor> distanceProcessor)
+void ProjPipeline::setDistanceProcessor(std::shared_ptr<DistanceProcessor> distanceProcessor)
 {
     this->_distanceProcessor = distanceProcessor;
 }
