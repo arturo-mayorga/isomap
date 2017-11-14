@@ -2,6 +2,7 @@
 #include <memory>
 #include <projpipeline.h>
 #include <euclideandistanceprocessor.h>
+#include <manifolddistanceprocessor.h>
 using namespace std;
 
 int main()
@@ -11,7 +12,8 @@ int main()
     cin >> nodeCount;
 
     ProjPipeline pipe;
-    pipe.setDistanceProcessor(make_shared<EuclideanDistanceProcessor>());
+    // pipe.setDistanceProcessor(make_shared<EuclideanDistanceProcessor>());
+    pipe.setDistanceProcessor(make_shared<ManifoldDistanceProcessor>());
 
     for (int i = 0; i < nodeCount; ++i)
     {

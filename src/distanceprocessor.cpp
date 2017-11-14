@@ -22,3 +22,8 @@ std::shared_ptr<DissimilarityMatrix> DistanceProcessor::getDissimilarityMatrix()
 
     return retMat;
 }
+
+double DistanceProcessor::_getDistance(int id0, int id1)
+{
+    return 1;
+}

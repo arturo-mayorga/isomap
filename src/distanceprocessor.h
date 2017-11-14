@@ -15,7 +15,7 @@ class DistanceProcessor
     virtual std::shared_ptr<DissimilarityMatrix> getDissimilarityMatrix();
 
     protected:
-    virtual double _getDistance(int id0, int id1) = 0;
+    virtual double _getDistance(int id0, int id1);
 };
 
 #endif

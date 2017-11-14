@@ -7,6 +7,6 @@ class ManifoldNode
     int id;
     double distance;
     std::vector<ManifoldNode*> children;
-}
+};
 
 #endif
