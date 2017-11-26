@@ -18,9 +18,11 @@ int main()
     for (int i = 0; i < nodeCount; ++i)
     {
         int dataPointCount = 0;
+        int id = 0;
+        cin >> id;
         cin >> dataPointCount;
         auto newNode = make_shared<DataNode>();
-        newNode->id = i;
+        newNode->id = id;
         for (int j = 0; j < dataPointCount; ++j)
         {
             double dp = 0;
@@ -33,7 +35,7 @@ int main()
 
     pipe.update();
 
-    auto decomp = pipe.getEigenDecomp(5);
+    auto decomp = pipe.getEigenDecomp(2);
 
     cout << "Number of results: " << decomp.size() << endl;
 

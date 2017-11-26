@@ -24,6 +24,12 @@ void ProjPipeline::setDistanceProcessor(std::shared_ptr<DistanceProcessor> dista
 std::vector< std::shared_ptr<DataNode> > ProjPipeline::getEigenDecomp(int order)
 {
     auto diffMatrix = this->_distanceProcessor->getDissimilarityMatrix();
-    return diffMatrix->getEigenDecomp(order);
+    auto retData = diffMatrix->getEigenDecomp(order);
+
+    for(auto i = 0; i < retData.size(); ++i) {
+        retData[i]->id = this->_dataNodes[i]->id;
+    }
+
+    return retData;
 }
 
