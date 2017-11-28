@@ -2,6 +2,7 @@
 #include <limits>
 #include <vector>
 #include <queue>
+#include <algorithm>
 
 #include <manifolddistanceprocessor.h>
 #include <euclideandistanceprocessor.h>
@@ -69,16 +70,63 @@ std::shared_ptr<DissimilarityMatrix> ManifoldDistanceProcessor::getDissimilarity
         masterList.push_back(new ManifoldNode());
     }
 
+    int maxChildren = 3;
+
     // populate topology
     for (int i = 0; i < nodeCount; ++i)
     {
         ManifoldNode *node = masterList[i];
 
+        vector<double> distances;
+
+        make_heap(distances.begin(), distances.end(), std::greater<double>());
+
         for (int j = 0; j < nodeCount; ++j)
         {
-            if (i != j && dMat->getDiffVal(i, j) <= minD)
+            auto diffVal = dMat->getDiffVal(i, j);
+            if (i != j && diffVal <= minD)
+            {
+                distances.push_back(diffVal);
+                std::push_heap (distances.begin(),distances.end(), std::greater<double>());
+            }
+        }
+
+        for (int j = 0; j < maxChildren; ++j)
+        {
+            std::pop_heap (distances.begin(),distances.end(), std::greater<double>());
+            distances.pop_back();
+        }
+
+        double maxD = distances.front();
+
+        for (int j = 0; j < nodeCount; ++j)
+        {
+            auto diffVal = dMat->getDiffVal(i, j);
+            if (i != j && diffVal <= maxD)
             {
                 node->children.push_back(masterList[j]);
+            }
+        }
+    }
+
+    // make sure the connections go both ways
+    for (auto node : masterList)
+    {
+        for (auto child : node->children)
+        {
+            int found = 0;
+            for (auto gChild : child->children)
+            {
+                if (gChild == node)
+                {
+                    found = 1;
+                    break;
+                }
+            }
+
+            if (!found)
+            {
+                child->children.push_back(node);
             }
         }
     }

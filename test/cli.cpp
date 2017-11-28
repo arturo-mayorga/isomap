@@ -7,6 +7,15 @@ using namespace std;
 
 int main()
 {
+    vector<double> weightVector;
+    int weightCount = 0;
+    cin >> weightCount;
+    for (int i = 0; i < weightCount; ++i) {
+        double weight = 0;
+        cin >> weight;
+        weightVector.push_back(weight);
+    }
+
     int nodeCount = 0;
 
     cin >> nodeCount;
@@ -27,7 +36,14 @@ int main()
         {
             double dp = 0;
             cin >> dp;
-            newNode->dataSet.push_back(dp);
+
+            double weight = 1;
+
+            if (j < weightCount) {
+                weight = weightVector[j];
+            }
+
+            newNode->dataSet.push_back(dp * weight);
         }
 
         pipe.addDataNode(newNode);
@@ -42,7 +58,7 @@ int main()
     for (auto dn : decomp)
     {
         int id = dn->id;
-        cout << id << ": ";
+        cout << "[" << id << "], ";
 
         auto dataSet = dn->dataSet;
         for (auto d : dataSet)
