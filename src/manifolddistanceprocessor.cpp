@@ -34,7 +34,9 @@ void dijkstra(ManifoldNode *root)
 
 std::shared_ptr<DissimilarityMatrix> ManifoldDistanceProcessor::getDissimilarityMatrix()
 {
+    // todo: make this a hyperparameter
     EuclideanDistanceProcessor dp;
+
     dp.setDataNodes(this->_dataNodes);
     auto dMat = dp.getDissimilarityMatrix();
 
@@ -67,9 +69,12 @@ std::shared_ptr<DissimilarityMatrix> ManifoldDistanceProcessor::getDissimilarity
 
     for (int i = 0; i < nodeCount; ++i)
     {
-        masterList.push_back(new ManifoldNode());
+        auto newNode = new ManifoldNode();
+        newNode->id = this->_dataNodes[i]->id;
+        masterList.push_back(newNode);
     }
 
+    // todo: make this a hyperparameter
     int maxChildren = 3;
 
     // populate topology
@@ -79,25 +84,29 @@ std::shared_ptr<DissimilarityMatrix> ManifoldDistanceProcessor::getDissimilarity
 
         vector<double> distances;
 
-        make_heap(distances.begin(), distances.end(), std::greater<double>());
-
         for (int j = 0; j < nodeCount; ++j)
         {
             auto diffVal = dMat->getDiffVal(i, j);
             if (i != j && diffVal <= minD)
             {
                 distances.push_back(diffVal);
-                std::push_heap (distances.begin(),distances.end(), std::greater<double>());
             }
         }
 
-        for (int j = 0; j < maxChildren; ++j)
-        {
-            std::pop_heap (distances.begin(),distances.end(), std::greater<double>());
-            distances.pop_back();
-        }
+        double maxD = numeric_limits<double>::max();
 
-        double maxD = distances.front();
+        if (maxChildren < distances.size())
+        {
+            make_heap(distances.begin(), distances.end(), std::greater<double>());
+
+            for (int j = 0; j < maxChildren; ++j)
+            {
+                std::pop_heap (distances.begin(),distances.end(), std::greater<double>());
+                distances.pop_back();
+            }
+
+            maxD = distances.front();
+        }
 
         for (int j = 0; j < nodeCount; ++j)
         {
@@ -110,7 +119,8 @@ std::shared_ptr<DissimilarityMatrix> ManifoldDistanceProcessor::getDissimilarity
     }
 
     // make sure the connections go both ways
-    for (auto node : masterList)
+    // todo: make this a hyperparameter
+    /*for (auto node : masterList)
     {
         for (auto child : node->children)
         {
@@ -129,6 +139,16 @@ std::shared_ptr<DissimilarityMatrix> ManifoldDistanceProcessor::getDissimilarity
                 child->children.push_back(node);
             }
         }
+    }*/
+
+    for (auto node : masterList)
+    {
+        // cout << node->id << " -> ";
+        for (auto child : node->children)
+        {
+            //ncout << child->id << ", ";
+        }
+        //cout << "\n";
     }
 
     auto retMat = std::make_shared<DissimilarityMatrix>();
