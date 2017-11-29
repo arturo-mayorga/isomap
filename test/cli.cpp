@@ -58,14 +58,14 @@ int main()
     for (auto dn : decomp)
     {
         int id = dn->id;
-        cout << "[" << id << "], ";
+        cout << "['[" << id << "]', ";
 
         auto dataSet = dn->dataSet;
         for (auto d : dataSet)
         {
             cout << d << ", ";
         }
-        cout << endl;
+        cout << "]," <<  endl;
     }
 
     return 0;

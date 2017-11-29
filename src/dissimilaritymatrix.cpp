@@ -39,11 +39,17 @@ std::vector< std::shared_ptr<DataNode> > DissimilarityMatrix::getEigenDecomp(int
     {
         for (int j = 0; j < this->_numItems; ++j)
         {
-            A(i, j) = this->getDiffVal(i, j);
+            auto v = this->getDiffVal(i, j);
+            if (v < 0)
+            {
+                v = 10;
+            }
+
+            A(i, j) = v;
         }
     }
 
-    // cout << "The dissimilarity matrix is:" << endl << A << endl << endl;
+     //cout << "The dissimilarity matrix is:" << endl << A << endl << endl;
 
     // http://eigen.tuxfamily.org/dox/classEigen_1_1SelfAdjointEigenSolver.html
     SelfAdjointEigenSolver<MatrixXd> es(A);
