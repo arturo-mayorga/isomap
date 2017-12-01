@@ -6,7 +6,6 @@
 
 #include <manifolddistanceprocessor.h>
 #include <euclideandistanceprocessor.h>
-#include <manifoldnode.h>
 
 using namespace std;
 
@@ -32,7 +31,7 @@ void dijkstra(ManifoldNode *root)
     }
 }
 
-std::shared_ptr<DissimilarityMatrix> ManifoldDistanceProcessor::getDissimilarityMatrix()
+vector<ManifoldNode*> ManifoldDistanceProcessor::getManifoldTopology()
 {
     // todo: make this a hyperparameter
     EuclideanDistanceProcessor dp;
@@ -151,9 +150,18 @@ std::shared_ptr<DissimilarityMatrix> ManifoldDistanceProcessor::getDissimilarity
         //cout << "\n";
     }
 
+    return masterList;
+}
+
+std::shared_ptr<DissimilarityMatrix> ManifoldDistanceProcessor::getDissimilarityMatrix()
+{
+    vector<ManifoldNode*> masterList = this->getManifoldTopology();
+
     auto retMat = std::make_shared<DissimilarityMatrix>();
 
     retMat->setNumItems(this->_dataNodes.size());
+
+    int nodeCount = this->_dataNodes.size();
 
     for (int i = 0; i < nodeCount; ++i)
     {
